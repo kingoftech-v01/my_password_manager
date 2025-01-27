@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass - Modifier le Compte</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .edit-form {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #03e9f4;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #03e9f4;
+            font-size: 1.1rem;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #03e9f4;
+            border-radius: 5px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .password-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .password-container input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #03e9f4;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background-color: #00d4e4;
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #03e9f4;
+            color: #03e9f4;
+        }
+
+        .btn-outline:hover {
+            background-color: #03e9f4;
+            color: #0a0a0a;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: 2px solid #03e9f4;
+            color: #03e9f4;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .back-btn:hover {
+            background-color: #03e9f4;
+            color: #0a0a0a;
+        }
+
+        .back-btn svg {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="account-details.html" class="back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Retour
+        </a>
+        <form class="edit-form">
+            <h1>Modifier le Compte</h1>
+            <div class="input-group">
+                <label for="website">Site Web</label>
+                <input type="text" id="website" value="example.com" required>
+            </div>
+            <div class="input-group">
+                <label for="url">URL</label>
+                <input type="url" id="url" value="https://www.example.com" required>
+            </div>
+            <div class="input-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" value="johndoe@email.com" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Mot de passe</label>
+                <div class="password-container">
+                    <input type="password" id="password" value="M0tDeP@sseSécurisé" required>
+                    <button type="button" class="btn" onclick="togglePassword()">Afficher</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="notes">Notes</label>
+                <textarea id="notes" rows="3">Compte créé le 01/01/2023</textarea>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn">Enregistrer</button>
+                <button type="button" class="btn btn-outline" onclick="window.history.back()">Annuler</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleBtn = passwordField.nextElementSibling;
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleBtn.textContent = 'Masquer';
+            } else {
+                passwordField.type = 'password';
+                toggleBtn.textContent = 'Afficher';
+            }
+        }
+    </script>
+</body>
+</html>

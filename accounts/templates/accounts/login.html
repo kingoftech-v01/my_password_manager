@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>SecurePass - Connexion</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+            overflow: hidden;
+        }
+
+        .login-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .login-visual {
+            flex: 1;
+            background: linear-gradient(135deg, #03e9f4, #00b8d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.1) 50%);
+            animation: pulse 5s infinite alternate;
+        }
+
+        .login-form-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0a0a0a;
+            padding: 2rem;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            background-color: #1a1a1a;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .login-form h1 {
+            color: #03e9f4;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 1rem;
+            color: #03e9f4;
+            border: none;
+            border-bottom: 2px solid #03e9f4;
+            outline: none;
+            background: transparent;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:valid + label {
+            top: -20px;
+            font-size: 0.8rem;
+            color: #03e9f4;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #03e9f4;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .login-btn:hover {
+            background-color: #00d4e4;
+            transform: scale(1.05);
+        }
+
+        .additional-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .additional-links a {
+            color: #03e9f4;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .additional-links a:hover {
+            color: #00d4e4;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-visual">
+            <div class="logo">
+                <h1 style="color: white; font-size: 3rem;">SecurePass</h1>
+            </div>
+        </div>
+        <div class="login-form-section">
+            <form class="login-form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <h1>Connexion</h1>
+                <div class="input-group">
+                    <input type="text" name="username" required id="username">
+                    <label>Nom d'utilisateur</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" id="password" required>
+                    <label>Mot de passe</label>
+                </div>
+                <button type="submit" class="login-btn">Se Connecter</button>
+                <div class="additional-links">
+                    <a href="#">Mot de passe oublié ?</a> | 
+                    <a href="{% url 'signup' %}">Créer un compte</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

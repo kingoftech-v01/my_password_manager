@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass - Profil Utilisateur</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            color: #03e9f4;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        .profile-section {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #03e9f4;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #03e9f4;
+            border-radius: 5px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #03e9f4;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #00d4e4;
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: 2px solid #03e9f4;
+            color: #03e9f4;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .back-btn:hover {
+            background-color: #03e9f4;
+            color: #0a0a0a;
+        }
+
+        .back-btn svg {
+            margin-right: 10px;
+        }
+
+        .user-info {
+            background-color: #2a2a2a;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .user-info p {
+            margin: 0.5rem 0;
+        }
+
+        .user-info strong {
+            color: #03e9f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Retour
+        </a>
+        <h1>Profil Utilisateur</h1>
+        
+        <div class="profile-section">
+            <h2>Informations Utilisateur</h2>
+            <div class="user-info">
+                <p><strong>Nom d'utilisateur : </strong>{{ user.username }}</p>
+                <p><strong>Email : </strong>
+                {% if user.email %}
+                    {{ user.email }}
+                    <a href="#">(Modifier)</a>
+                {% else %}
+                    <a href="#" class="btn btn-primary btn-sm">Ajouter une adresse email</a>
+                {% endif %}
+                </p>
+                <p><strong>Date d'inscription : </strong>{{ user.date_joined|date:"d F Y à H:i" }}</p>
+                {% if user.first_name or user.last_name %}
+                    <p><strong>Nom complet : </strong>{{ user.get_full_name }}</p>
+                {% endif %}
+                <p><strong>Dernière connexion : </strong>{{ user.last_login|date:"d F Y à H:i" }}</p>
+                <p><strong>Statut du compte : </strong>
+                {% if user.is_active %}
+                    <span class="text-success">Actif</span>
+                {% else %}
+                    <span class="text-danger">Inactif</span>
+                {% endif %}
+                </p>
+            </div>
+            <div class="user-actions mt-4">
+                <a href="#" class="btn btn-secondary submit-btn">Modifier profil</a>
+                <a href="#" class="btn btn-danger submit-btn">Supprimer compte</a>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h2>Changer le Mot de Passe</h2>
+            <form>
+                <div class="input-group">
+                    <label for="currentPassword">Mot de passe actuel</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="input-group">
+                    <label for="newPassword">Nouveau mot de passe</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Changer le Mot de Passe</button>
+            </form>
+        </div>
+
+        <div class="profile-section">
+            <h2>Paramètres de Sécurité</h2>
+            <div class="input-group">
+                <label for="twoFactor">
+                    <input type="checkbox" id="twoFactor"> Activer l'authentification à deux facteurs
+                </label>
+            </div>
+            <div class="input-group">
+                <label for="sessionTimeout">Délai d'expiration de session (minutes)</label>
+                <input type="number" id="sessionTimeout" min="5" max="60" value="30">
+            </div>
+            <button type="submit" class="submit-btn">Sauvegarder les Paramètres</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass - Analyse de Sécurité</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            color: #03e9f4;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        .security-analysis {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .progress-container {
+            background-color: #2a2a2a;
+            border-radius: 20px;
+            margin: 2rem 0;
+            height: 30px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #03e9f4, #00d4e4);
+            transition: width 0.5s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 50px 50px;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 50px 50px;
+            }
+        }
+
+        .analysis-result {
+            margin-top: 2rem;
+        }
+
+        .result-item {
+            background-color: #2a2a2a;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .result-item h3 {
+            color: #03e9f4;
+            margin-top: 0;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: 2px solid #03e9f4;
+            color: #03e9f4;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .back-btn:hover {
+            background-color: #03e9f4;
+            color: #0a0a0a;
+        }
+
+        .back-btn svg {
+            margin-right: 10px;
+        }
+
+        .start-analysis-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #03e9f4;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .start-analysis-btn:hover {
+            background-color: #00d4e4;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="dashboard.html" class="back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Retour
+        </a>
+        <h1>Analyse de Sécurité</h1>
+        
+        <div class="security-analysis">
+            <h2>Progression de l'analyse</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <button class="start-analysis-btn" onclick="startAnalysis()">Démarrer l'analyse</button>
+            <div class="analysis-result" id="analysisResult" style="display: none;">
+                <!-- Les résultats de l'analyse seront insérés ici -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startAnalysis() {
+            const progressBar = document.getElementById('progressBar');
+            const analysisResult = document.getElementById('analysisResult');
+            let progress = 0;
+
+            analysisResult.style.display = 'none';
+            analysisResult.innerHTML = '';
+
+            const interval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    showResults();
+                }
+            }, 50);
+        }
+
+        function showResults() {
+            const analysisResult = document.getElementById('analysisResult');
+            analysisResult.style.display = 'block';
+            
+            const results = [
+                { title: "Force des mots de passe", description: "80% de vos mots de passe sont considérés comme forts." },
+                { title: "Mots de passe réutilisés", description: "3 mots de passe sont utilisés sur plusieurs comptes." },
+                { title: "Comptes compromis", description: "Aucun de vos comptes n'a été trouvé dans des fuites de données connues." },
+                { title: "Authentification à deux facteurs", description: "Activée sur 60% de vos comptes compatibles." }
+            ];
+
+            results.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <h3>${result.title}</h3>
+                    <p>${result.description}</p>
+                `;
+                analysisResult.appendChild(resultItem);
+            });
+        }
+    </script>
+</body>
+</html>
